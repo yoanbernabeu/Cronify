@@ -8,6 +8,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CronRepository::class)]
 class Cron
 {
+    public static $STATUS_PENDING = 'pending';
+    public static $STATUS_RUNNING = 'running';
+    public static $STATUS_SUCCESS = 'success';
+    public static $STATUS_FAILURE = 'failure';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
