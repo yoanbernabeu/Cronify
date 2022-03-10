@@ -26,5 +26,4 @@ class JobCrudController extends AbstractCrudController
             AssociationField::new('app'),
         ];
     }
-   
 }
