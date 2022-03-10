@@ -1,0 +1,70 @@
+name: Pipeline-CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # https://github.com/shivammathur/setup-php (community)
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
+          
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: |
+            vendor
+          key: ${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          
+      - name: "Composer install"
+        run: composer install --no-interaction --no-progress
+          
+      # Install Symfony CLI
+      - name: Symfony CLI
+        run: |
+            curl -sS https://get.symfony.com/cli/installer | bash
+            mv /home/runner/.symfony/bin/symfony /usr/local/bin/symfony
+        
+      # Check vulnerabilities
+      - name: Symfony Check Vulnerabilities
+        run: symfony check:security
+        
+      # PHP CS FIXER
+      - name: PHP-CS-Fixer
+        run: |
+           composer require friendsofphp/php-cs-fixer
+           ./vendor/bin/php-cs-fixer fix --dry-run
+           
+      # PHP STAN
+      - name: PHP Stan
+        run: |
+           ./vendor/bin/simple-phpunit install
+           composer require phpstan/phpstan
+           composer require phpstan/extension-installer
+           composer config --no-plugins allow-plugins.phpstan/extension-installer true
+           composer require phpstan/phpstan-symfony
+           ./vendor/bin/phpstan analyse src --memory-limit 1G
+           
+      - name: Lint YAML files
+        run: ./bin/console lint:yaml config --parse-tags
+
+      - name: Lint Twig templates
+        run: ./bin/console lint:twig templates --env=prod
+
+      - name: Lint Parameters and Services
+        run: ./bin/console lint:container --no-debug
+
+      - name: Lint Doctrine entities
+        run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+      - name: PHP Unit
+        run: ./bin/phpunit
