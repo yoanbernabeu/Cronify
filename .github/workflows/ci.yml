@@ -3,7 +3,7 @@ name: Pipeline-CI
 on:
   push:
     branches:
-      - *
+      - '*'
 
 jobs:
   ci:
