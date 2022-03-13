@@ -105,6 +105,6 @@ class Job
 
     public function __toString(): string
     {
-        return $this->name . ' (' . $this->app->getName() . ')';
+        return $this->name.' ('.$this->app->getName().')';
     }
 }
