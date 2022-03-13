@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Job;
 use App\Service\JobService;
+use App\Service\JsonResponseMaker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,24 +12,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class EndpointController extends AbstractController
 {
     public function __construct(
-        public JobService $jobService
+        public JobService $jobService,
+        public JsonResponseMaker $jsonResponseMaker
     ) {
     }
 
-    #[Route('/endpoint/{uuid}/start', name: 'app_endpoint')]
-    public function index(Job $job): Response
+    #[Route('/endpoint/{uuid}/start', name: 'app_endpoint_start')]
+    public function start(Job $job): Response
     {
         $cron = $this->jobService->startJob($job);
 
-        $response = new Response();
+        return $this->jsonResponseMaker->makeJsonResponse($this->jobService->CronResponse($cron));
+    }
 
-        $response->setContent(json_encode([
-            'status' => 'success',
-            'cron' => $cron
-        ]));
-        
-        $response->headers->set('Content-Type', 'application/json');
+    #[Route('/endpoint/{uuid}/stop', name: 'app_endpoint_stop')]
+    public function stop(Job $job): Response
+    {
+        $cron = $this->jobService->stopJobinSuccess($job);
 
-        return $response;
+        return $this->jsonResponseMaker->makeJsonResponse($this->jobService->CronResponse($cron));
+    }
+
+    #[Route('/endpoint/{uuid}/failure', name: 'app_endpoint_failure')]
+    public function failure(Job $job): Response
+    {
+        $cron = $this->jobService->stopJobinFailure($job);
+
+        return $this->jsonResponseMaker->makeJsonResponse($this->jobService->CronResponse($cron));
     }
 }

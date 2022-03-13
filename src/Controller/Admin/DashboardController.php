@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\App;
 use App\Entity\Cron;
 use App\Entity\Job;
+use App\Repository\CronRepository;
 use App\Repository\JobRepository;
 use App\Service\ChartManager;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -18,13 +19,18 @@ class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         public JobRepository $jobRepository,
-        public ChartManager $chartManager
+        public ChartManager $chartManager,
+        public CronRepository $cronRepository
     ) {
     }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        if (0 === count($this->cronRepository->findAll())) {
+            return $this->render('admin/index.html.twig');
+        }
+
         return $this->render('admin/index.html.twig', [
             'chart' => $this->chartManager->getHomepageChart(),
         ]);

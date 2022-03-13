@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Cron;
+use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -45,32 +46,16 @@ class CronRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Cron[] Returns an array of Cron objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findTheLastOneByJob(Job $job): ?Cron
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Cron
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy('c.id', 'DESC')
+            ->where('c.job = :job')
+            ->setParameter('job', $job)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+   
 }
