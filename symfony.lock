@@ -572,6 +572,9 @@
     "symfony/uid": {
         "version": "v6.0.3"
     },
+    "symfony/ux-chartjs": {
+        "version": "v2.1.0"
+    },
     "symfony/validator": {
         "version": "6.0",
         "recipe": {

@@ -16,20 +16,20 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; $i < $faker->numberBetween(2, 5); ++$i) {
             $app = new App();
             $app->setName($faker->word());
             $app->setDescription($faker->sentence());
             $manager->persist($app);
 
-            for ($j = 0; $j < 5; ++$j) {
+            for ($j = 0; $j < $faker->numberBetween(2, 5); ++$j) {
                 $job = new Job();
                 $job->setName($faker->word());
                 $job->setDescription($faker->sentence());
                 $job->setApp($app);
                 $manager->persist($job);
 
-                for ($k = 0; $k < 10; ++$k) {
+                for ($k = 0; $k < $faker->numberBetween(5, 10); ++$k) {
                     $cron = new Cron();
                     $date = $faker->dateTimeBetween('-6 month', 'now');
                     $cron->setStartAt(DateTimeImmutable::createFromMutable($date))
