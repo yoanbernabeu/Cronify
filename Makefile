@@ -16,6 +16,11 @@ start:
 	symfony serve -d
 .PHONY: start
 
+fixtures: export APP_ENV=dev
+fixtures:
+	symfony console d:f: --no-interaction
+.PHONY: fixtures
+
 stop: export APP_ENV=dev
 stop:
 	docker-compose stop
