@@ -2,7 +2,9 @@
     "devDependencies": {
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.0.0",
+        "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
         "@symfony/webpack-encore": "^1.7.0",
+        "chart.js": "^3.4.1",
         "core-js": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
         "webpack-notifier": "^1.6.0"
