@@ -18,6 +18,7 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+
         return $this->redirect($adminUrlGenerator->setController(CronCrudController::class)->generateUrl());
     }
 
@@ -33,6 +34,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Cron', 'fas fa-list', Cron::class);
         yield MenuItem::linkToCrud('App', 'fas fa-list', App::class);
         yield MenuItem::linkToCrud('Job', 'fas fa-list', Job::class);
-
     }
 }

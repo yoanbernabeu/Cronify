@@ -24,5 +24,4 @@ class AppCrudController extends AbstractCrudController
             TextareaField::new('description'),
         ];
     }
-   
 }

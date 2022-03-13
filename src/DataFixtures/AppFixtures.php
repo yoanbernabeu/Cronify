@@ -1,0 +1,52 @@
+<?php
+
+namespace App\DataFixtures;
+
+use App\Entity\App;
+use App\Entity\Cron;
+use App\Entity\Job;
+use DateTimeImmutable;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+
+class AppFixtures extends Fixture
+{
+    public function load(ObjectManager $manager): void
+    {
+        $faker = Factory::create('fr_FR');
+
+        for ($i = 0; $i < 5; ++$i) {
+            $app = new App();
+            $app->setName($faker->word());
+            $app->setDescription($faker->sentence());
+            $manager->persist($app);
+
+            for ($j = 0; $j < 5; ++$j) {
+                $job = new Job();
+                $job->setName($faker->word());
+                $job->setDescription($faker->sentence());
+                $job->setApp($app);
+                $manager->persist($job);
+
+                for ($k = 0; $k < 10; ++$k) {
+                    $cron = new Cron();
+                    $date = $faker->dateTimeBetween('-6 month', 'now');
+                    $cron->setStartAt(DateTimeImmutable::createFromMutable($date))
+                        ->setEndAt(DateTimeImmutable::createFromMutable($date->modify($faker->numberBetween(1, 6).' minutes')))
+                        ->setJob($job)
+                        ->setStatus($faker->randomElement([
+                                Cron::$STATUS_FAILURE,
+                                Cron::$STATUS_SUCCESS,
+                                Cron::$STATUS_RUNNING,
+                            ]
+                        )
+                    );
+                    $manager->persist($cron);
+                }
+            }
+        }
+
+        $manager->flush();
+    }
+}

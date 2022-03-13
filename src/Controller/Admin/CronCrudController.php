@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CronCrudController extends AbstractCrudController
 {
@@ -23,7 +22,6 @@ class CronCrudController extends AbstractCrudController
             IdField::new('id')
                 ->onlyOnIndex(),
             AssociationField::new('job'),
-            TextField::new('job.app.name', 'App'),
             DateTimeField::new('startAt'),
             DateTimeField::new('endAt'),
             ChoiceField::new('status')
