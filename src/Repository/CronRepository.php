@@ -57,5 +57,4 @@ class CronRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-   
 }

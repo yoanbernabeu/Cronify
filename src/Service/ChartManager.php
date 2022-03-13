@@ -19,7 +19,7 @@ class ChartManager
     {
         $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
         $jobs = $this->jobRepository->findAll();
-        
+
         foreach ($jobs as $job) {
             $labels[] = $job->getName();
 
