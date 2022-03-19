@@ -5,6 +5,7 @@ namespace App\Tests\Entities;
 use App\Entity\App;
 use App\Entity\Job;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 class AppTest extends TestCase
 {
@@ -15,14 +16,17 @@ class AppTest extends TestCase
     {
         $app = new App();
         $job = new Job();
+        $uuid = Uuid::v4();
 
         $app->setName(self::$name);
         $app->setDescription(self::$description);
         $app->addJob($job);
+        $app->setUuid($uuid);
 
         $this->assertTrue($app->getName() === self::$name);
         $this->assertTrue($app->getDescription() === self::$description);
         $this->assertTrue($app->getJobs()->contains($job));
+        $this->assertTrue($app->getUuid() === $uuid);
     }
 
     public function testIfNull(): void
@@ -32,6 +36,7 @@ class AppTest extends TestCase
         $this->assertNull($app->getName());
         $this->assertNull($app->getDescription());
         $this->assertNull($app->getId());
+        $this->assertNull($app->getUuid());
     }
 
     public function testAddAndRemoveCron(): void
