@@ -10,15 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     services:
-      mysql:
-        image: mysql:latest
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
         env:
-          MYSQL_DATABASE: test_database
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_ROOT_PASSWORD: rootpass
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s 
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
