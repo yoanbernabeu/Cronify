@@ -36,6 +36,14 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+    #[Route('/admin/job-cron-code/{id}', name: 'admin_job_cron_code')]
+    public function cronCode(Job $job): Response
+    {
+        return $this->render('admin/job_cron_code.html.twig', [
+            'job' => $job,
+        ]);
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()

@@ -122,9 +122,4 @@ class Job
 
         return $this;
     }
-
-    public function getStartEndpoint(): string
-    {
-        return '/endpoint/'.$this->getUuid().'/start';
-    }
 }
