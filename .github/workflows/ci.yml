@@ -15,8 +15,6 @@ jobs:
         env:
           MYSQL_DATABASE: test_database
           MYSQL_HOST: 127.0.0.1
-          MYSQL_USER: admin
-          MYSQL_PASSWORD: rootpass
           MYSQL_ROOT_PASSWORD: rootpass
         ports:
           - 3306:3306
@@ -81,8 +79,8 @@ jobs:
 
       - name: PHP Unit
         run: |
-           APP_ENV=test php bin/console --no-interaction doctrine:database:drop --force
-           APP_ENV=test php bin/console --no-interaction doctrine:database:create
-           APP_ENV=test php bin/console --no-interaction d:m:m
-           APP_ENV=test php bin/console --no-interaction d:f:l --no-interaction 
+           APP_ENV=test symfony console --no-interaction doctrine:database:drop --force
+           APP_ENV=test symfony console --no-interaction doctrine:database:create
+           APP_ENV=test symfony console --no-interaction d:m:m
+           APP_ENV=test symfony console --no-interaction d:f:l --no-interaction 
            ./bin/phpunit
