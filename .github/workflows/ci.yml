@@ -40,7 +40,15 @@ jobs:
           
       - name: "Composer install"
         run: composer install --no-interaction --no-progress
-          
+      
+      - name: Set Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          version: 12.x
+      
+      - name: npm
+        run: npm install && npm run build
+
       # Install Symfony CLI
       - name: Symfony CLI
         run: |
