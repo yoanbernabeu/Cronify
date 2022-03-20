@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class JobControllerTest extends WebTestCase
@@ -9,6 +10,11 @@ class JobControllerTest extends WebTestCase
     public function testShouldBeDisplayJobList(): void
     {
         $client = static::createClient();
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.com');
+        $client->loginUser($testUser);
+
         $client->request('GET', '/admin');
 
         $this->assertResponseIsSuccessful();
@@ -23,6 +29,11 @@ class JobControllerTest extends WebTestCase
     public function testShouldBeDisplayJobCronCode(): void
     {
         $client = static::createClient();
+
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('admin@admin.com');
+        $client->loginUser($testUser);
+
         $client->request('GET', '/admin');
 
         $this->assertResponseIsSuccessful();

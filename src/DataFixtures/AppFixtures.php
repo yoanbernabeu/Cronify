@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\App;
 use App\Entity\Cron;
 use App\Entity\Job;
+use App\Service\UserManager;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -16,6 +17,11 @@ use Symfony\Component\Uid\Uuid;
  */
 class AppFixtures extends Fixture
 {
+    public function __construct(
+        public UserManager $userManager
+    ) {
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -52,6 +58,8 @@ class AppFixtures extends Fixture
                 }
             }
         }
+
+        $this->userManager->createUser('admin@admin.com', 'admin');
 
         $manager->flush();
     }
