@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
 {
     public function __construct(
         public UserManager $userManager
-    ) {     
+    ) {
     }
 
     public function load(ObjectManager $manager): void
