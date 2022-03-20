@@ -9,6 +9,18 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     continue-on-error: false
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -28,7 +40,15 @@ jobs:
           
       - name: "Composer install"
         run: composer install --no-interaction --no-progress
-          
+      
+      - name: Set Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          version: 12.x
+      
+      - name: npm
+        run: npm install && npm run build
+
       # Install Symfony CLI
       - name: Symfony CLI
         run: |
@@ -68,4 +88,10 @@ jobs:
         run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
 
       - name: PHP Unit
-        run: ./bin/phpunit
+        run: |
+           APP_ENV=test symfony console --no-interaction doctrine:database:create
+           APP_ENV=test symfony console --no-interaction d:m:m
+           APP_ENV=test symfony console --no-interaction d:f:l --no-interaction 
+           ./bin/phpunit
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/app_test?serverVersion=13&charset=utf8

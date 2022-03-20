@@ -24,6 +24,9 @@ class App
     #[ORM\OneToMany(mappedBy: 'app', targetEntity: Job::class)]
     private $jobs;
 
+    #[ORM\Column(type: 'uuid')]
+    private $uuid;
+
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
@@ -91,5 +94,17 @@ class App
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 }

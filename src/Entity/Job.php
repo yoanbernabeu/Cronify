@@ -27,6 +27,9 @@ class Job
     #[ORM\ManyToOne(targetEntity: App::class, inversedBy: 'jobs')]
     private $app;
 
+    #[ORM\Column(type: 'uuid')]
+    private $uuid;
+
     public function __construct()
     {
         $this->crons = new ArrayCollection();
@@ -106,5 +109,17 @@ class Job
     public function __toString(): string
     {
         return $this->name.' ('.$this->app->getName().')';
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid($uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 }

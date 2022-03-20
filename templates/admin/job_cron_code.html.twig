@@ -1,0 +1,57 @@
+{# templates/admin/my-custom-page.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+	<section class="text-center container">
+		<h1>{{ job.name }}</h1>
+		<p>
+			<span class="badge bg-primary">{{ job.app.name }}</span>
+		</p>
+		<p>{{ job.description }}</p>
+	</section>
+	<section class="shadow-lg container mt-5 p-5">
+		<h2>Code snippet (with Curl)</h2>
+		<div class="row">
+			<div class="col-12 m-4">
+				<h3>
+					<i class="fas fa-play"></i>
+					Start cron code</h3>
+				<div class="bg-dark">
+					<pre class="text-light p-4"><code>curl {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/start</code></pre>
+				</div>
+			</div>
+
+			<div class="col-12 m-4">
+				<h3>
+					<i class="fas fa-stop"></i>
+					Stop cron code</h3>
+				<div class="bg-dark">
+					<pre class="text-light p-4"><code>curl {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/stop</code></pre>
+				</div>
+			</div>
+
+			<div class="col-12 m-4">
+				<h3>
+					<i class="fas fa-bomb"></i>
+					Failure cron code</h3>
+				<div class="bg-dark">
+					<pre class="text-light p-4"><code>curl {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/failure</code></pre>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="shadow-lg container mt-5 p-5">
+		<h2>Crontab example</h2>
+		<div class="row">
+			<div class="col-12 m-4">
+				<div class="bg-dark">
+					<pre class="text-light p-4"><code>
+* * * * * curl  {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/start
+* * * * * sleep 5 && --Your Command-- && curl {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/stop || curl {{ app.request.schemeAndHttpHost }}/endpoint/{{ job.uuid }}/failure
+					</code></pre>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

@@ -9,7 +9,11 @@ use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Uid\Uuid;
 
+/**
+ * @codeCoverageIgnore
+ */
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
@@ -20,6 +24,7 @@ class AppFixtures extends Fixture
             $app = new App();
             $app->setName($faker->word());
             $app->setDescription($faker->sentence());
+            $app->setUuid(Uuid::v4());
             $manager->persist($app);
 
             for ($j = 0; $j < $faker->numberBetween(2, 5); ++$j) {
@@ -27,6 +32,7 @@ class AppFixtures extends Fixture
                 $job->setName($faker->word());
                 $job->setDescription($faker->sentence());
                 $job->setApp($app);
+                $job->setUuid(Uuid::v4());
                 $manager->persist($job);
 
                 for ($k = 0; $k < $faker->numberBetween(5, 10); ++$k) {

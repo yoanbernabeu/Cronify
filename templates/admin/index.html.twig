@@ -6,10 +6,16 @@
 		<div class="col-lg-6 col-md-8 mx-auto">
 			<img src="/img/logo_ban.png" alt="Logo ban" class="img-fluid">
 		</div>
-        <div class="col mx-5 shadow">
-			<h2 class="text-center text-secondary">Your statistics</h2>
-            {{ render_chart(chart) }}
-            {{ encore_entry_script_tags('app') }}
-        </div>
+
+		{% if chart is defined %}
+			<div class="col mx-5 shadow">
+				<h2 class="text-center text-secondary">Your statistics</h2>
+				
+					{{ render_chart(chart) }}
+				
+				{{ encore_entry_script_tags('app') }}
+			</div>
+		{% endif %}
+		
 	</section>
 {% endblock %}
