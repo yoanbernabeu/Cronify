@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DashboardControllerTest extends WebTestCase
 {
-    public function testShouldBeDispplayDashboardHomePage(): void
+    public function testShouldBeDisplayDashboardHomePage(): void
     {
         $client = static::createClient();
 
