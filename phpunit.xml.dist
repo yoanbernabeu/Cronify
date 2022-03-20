@@ -30,7 +30,14 @@
     </coverage>
 
     <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+            <arguments>
+                <array>
+                    <!-- set this option to 0 to disable the DebugClassLoader integration -->
+                    <element key="debug-class-loader"><integer>0</integer></element>
+                </array>
+            </arguments>
+        </listener>
     </listeners>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
