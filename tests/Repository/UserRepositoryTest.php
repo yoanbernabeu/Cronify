@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserpRepositoryTest extends KernelTestCase
+class UserRepositoryTest extends KernelTestCase
 {
     public function testShouldBeCreateNewUser(): void
     {
