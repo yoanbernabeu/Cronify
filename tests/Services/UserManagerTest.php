@@ -17,7 +17,7 @@ class UserManagerTest extends KernelTestCase
         $userManager = static::getContainer()->get(UserManager::class);
 
         $this->assertInstanceOf(UserManager::class, $userManager);
-        
+
         $user = $userManager->createUser('user@service.com', 'password');
 
         $this->assertInstanceOf(User::class, $user);

@@ -14,14 +14,14 @@ class CreateUserCommandTest extends KernelTestCase
         $application = new Application($kernel);
 
         $this->assertSame('test', $kernel->getEnvironment());
-     
+
         $command = $application->find('app:create-user');
 
         $commandTester = new CommandTester($command);
-        
+
         $commandTester->execute([
             'username' => 'command@test.com',
-            'password' => 'test'
+            'password' => 'test',
         ]);
 
         $commandTester->assertCommandIsSuccessful();

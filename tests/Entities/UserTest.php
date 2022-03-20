@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
-    const USER_EMAIL = 'test@test.com';
-    const USER_PASSWORD = 'test';
-    const USER_ROLES = ['ROLE_USER'];
+    public const USER_EMAIL = 'test@test.com';
+    public const USER_PASSWORD = 'test';
+    public const USER_ROLES = ['ROLE_USER'];
 
     public function testIfTrue(): void
     {

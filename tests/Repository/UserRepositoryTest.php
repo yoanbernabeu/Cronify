@@ -43,7 +43,7 @@ class UserpRepositoryTest extends KernelTestCase
 
         $userRepository->remove($user);
     }
-    
+
     public function testShouldBeCreateNewUserAndUpgradePasswordWithValidUser(): void
     {
         $kernel = self::bootKernel();
