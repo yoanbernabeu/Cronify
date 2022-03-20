@@ -28,12 +28,12 @@ stop:
 .PHONY: stop
 
 tests: export APP_ENV=test
-tests:
+tests: reset-test
 	symfony php bin/phpunit --testdox
 .PHONY: tests
 
 coverage: export APP_ENV=test
-coverage:
+coverage: reset-test
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-html var/coverage/test-coverage
 .PHONY: coverage
 
@@ -43,3 +43,11 @@ reset:
 	symfony console d:d:c
 	symfony console d:m:m --no-interaction
 .PHONY: reset
+
+reset-test: export APP_ENV=test
+reset-test:
+	symfony console d:d:d --force
+	symfony console d:d:c
+	symfony console d:m:m --no-interaction
+	symfony console d:f:l --no-interaction
+.PHONY: reset-test
