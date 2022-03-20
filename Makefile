@@ -4,6 +4,7 @@ install: export APP_ENV=dev
 install:
 	docker-compose up -d
 	composer install
+	symfony serve -d
 	npm install
 	npm run build
 	symfony console d:d:c
