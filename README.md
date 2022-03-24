@@ -133,7 +133,10 @@ docker-compose up -d
 
 ###  5.3. <a name='Launchyourbrowserandhavefun'></a>Launch your browser and have fun !
 
-Go to http://localhost:8080
+- Go to http://localhost:8080
+- Login with :
+	- username: demo@demo.com
+	- password: password
 
 ##  6. <a name='BuildyourownDockerimage'></a> Build your own Docker image
 

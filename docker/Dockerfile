@@ -8,8 +8,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
-RUN echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list \
-    && apt update && apt install symfony-cli -yqq nodejs npm
+RUN apt update && apt install -yqq nodejs npm
 
 COPY . /var/www/
 
@@ -17,7 +16,7 @@ COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN cd /var/www && \
     composer install && \
-    npm install && \
+    npm install --force && \
     npm run build
     
 WORKDIR /var/www/
