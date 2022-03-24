@@ -52,3 +52,8 @@ reset-test:
 	symfony console d:m:m --no-interaction
 	symfony console d:f:l --no-interaction
 .PHONY: reset-test
+
+docker-build-and-push:
+	docker build . -f ./docker/Dockerfile -t yoanbernabeu/cronify
+	docker push yoanbernabeu/cronify
+.PHONY: docker-build-and-push
