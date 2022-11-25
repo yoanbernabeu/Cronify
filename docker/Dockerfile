@@ -8,7 +8,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
 
-RUN apt update && apt install -yqq nodejs npm
+RUN apt update && apt install -yqq nodejs npm zip
 
 COPY . /var/www/
 
